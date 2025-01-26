@@ -13,7 +13,7 @@ This project presents a complete infrastructure to deploy applications on a Kube
 
 
 
-## AWS EKS DEPLOY WITH CLOUDFORMATION
+### AWS EKS DEPLOY WITH CLOUDFORMATION
 
 This CloudFormation stack deploys a pre-configured EC2 instance to create an EKS (Kubernetes) cluster on AWS. It includes:
 
