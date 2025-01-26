@@ -5,7 +5,8 @@ This project presents a complete infrastructure to deploy applications on a Kube
 
 
 
-
 | ![](aws-eks.PNG) | ![](dns.PNG) |
 |------------------|-------------|
+| **AWS EKS**      | **DNS**     |
+
 
