@@ -23,3 +23,5 @@ Security Group: Allows SSH (port 22) and HTTP (port 80) connections.
 Automated EKS Deployment: Downloads an EKS template and launches a cluster in two public subnets.
 Finally, outputs display the EC2 instance ID, public address, and availability zone.
 
+## [code stack cloudformation](aws-eks.yaml)
+
