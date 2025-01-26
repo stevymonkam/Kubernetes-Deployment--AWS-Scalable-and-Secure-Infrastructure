@@ -12,11 +12,14 @@ This project presents a complete infrastructure to deploy applications on a Kube
 
 
 
-Cette stack CloudFormation déploie une instance EC2 préconfigurée pour créer un cluster EKS (Kubernetes) sur AWS. Elle inclut :
 
-Ressources IAM : Crée un rôle et un profil d'instance avec des permissions pour gérer le cluster.
-Instance EC2 : Déploie une instance avec tous les outils nécessaires (kubectl, AWS CLI, etc.) et un script d'amorçage pour lancer le cluster EKS.
-Groupe de sécurité : Autorise les connexions SSH (port 22) et HTTP (port 80).
-Déploiement automatique d'EKS : Télécharge un modèle EKS et lance un cluster dans deux sous-réseaux publics.
-Enfin, des outputs affichent l'ID, l'adresse publique et la zone de disponibilité de l'instance EC2.
+## AWS EKS DEPLOY WITH CLOUDFORMATION
+
+This CloudFormation stack deploys a pre-configured EC2 instance to create an EKS (Kubernetes) cluster on AWS. It includes:
+
+IAM Resources: Creates a role and instance profile with permissions to manage the cluster.
+EC2 Instance: Deploys an instance with all the necessary tools (kubectl, AWS CLI, etc.) and a bootstrap script to launch the EKS cluster.
+Security Group: Allows SSH (port 22) and HTTP (port 80) connections.
+Automated EKS Deployment: Downloads an EKS template and launches a cluster in two public subnets.
+Finally, outputs display the EC2 instance ID, public address, and availability zone.
 
