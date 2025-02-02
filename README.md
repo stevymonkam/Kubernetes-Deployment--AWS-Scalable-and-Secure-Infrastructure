@@ -282,48 +282,6 @@ spec:
 
 ---
 
-## Configure Ingress and SSL
-
-### Ingress Resource
-```yaml
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: app-ingress
-  annotations:
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/ssl-redirect: "443"
-    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:615299770598:certificate/a4806da9-3d96-45f2-a08d-05e380e9ef5e"
-spec:
-  rules:
-    - host: example.com
-      http:
-        paths:
-          - path: /angular
-            pathType: Prefix
-            backend:
-              service:
-                name: angular-app-service
-                port:
-                  number: 80
-          - path: /react
-            pathType: Prefix
-            backend:
-              service:
-                name: react-service-app
-                port:
-                  number: 80
-```
-
----
-
-## Set Up ExternalDNS
-1. Deploy ExternalDNS in your cluster.
-2. Configure ExternalDNS to automatically update Route 53 records based on Ingress.
-3. Ensure your Ingress resources include a `host` field that matches your domain.
-
----
 
 ## Install AWS Load Balancer Controller
 1. Install the AWS Load Balancer Controller :
@@ -375,6 +333,50 @@ kubectl apply -f external-dns.yaml
 3. Verify that the controller provisions an Application Load Balancer (ALB).
 
 ---
+
+## Configure Ingress and SSL
+
+### Ingress Resource
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:615299770598:certificate/a4806da9-3d96-45f2-a08d-05e380e9ef5e"
+spec:
+  rules:
+    - host: example.com
+      http:
+        paths:
+          - path: /angular
+            pathType: Prefix
+            backend:
+              service:
+                name: angular-app-service
+                port:
+                  number: 80
+          - path: /react
+            pathType: Prefix
+            backend:
+              service:
+                name: react-service-app
+                port:
+                  number: 80
+```
+
+---
+
+## Set Up ExternalDNS
+1. Deploy ExternalDNS in your cluster.
+2. Configure ExternalDNS to automatically update Route 53 records based on Ingress.
+3. Ensure your Ingress resources include a `host` field that matches your domain.
+
+---
+
 
 ## Final Steps
 After completing these steps:
