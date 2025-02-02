@@ -34,8 +34,7 @@ Finally, outputs display the EC2 instance ID, public address, and availability z
 ## Composants et flux de travail
 
 
-# Deploy EKS App with Route 53 and SSL on AWS
-
+# Secure Deployment of Angular & React Apps on AWS EKS with SSL & Route 53 (less abtimal solution without ingress controller)
 ## Overview
 This guide explains how to deploy Angular and React applications on AWS EKS with a Route 53 domain and SSL using AWS Certificate Manager (ACM).
 
