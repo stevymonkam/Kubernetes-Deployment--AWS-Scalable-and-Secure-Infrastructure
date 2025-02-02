@@ -180,7 +180,7 @@ spec:
     spec:
       containers:
       - name: java-backend-container
-        image: myrepo/java-backend:1.0
+        image: stevymonkam/backend1:1.0
         ports:
         - containerPort: 8080
         env:
