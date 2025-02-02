@@ -204,5 +204,150 @@ Your applications are now secure and publicly accessible over **HTTPS**! 🎉
 
 
 
+
+# Deploy EKS App with Ingress, ExternalDNS, and AWS Load Balancer Controller (BEST SOLUTION)
+
+## Overview
+This guide explains how to deploy Angular and React applications on AWS EKS using Ingress, ExternalDNS, and AWS Load Balancer Controller for managing traffic, SSL, and domain resolution via Route 53.
+
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Deploy Angular and React Apps](#deploy-angular-and-react-apps)
+- [Configure Ingress and SSL](#configure-ingress-and-ssl)
+- [Set Up ExternalDNS](#set-up-externaldns)
+- [Install AWS Load Balancer Controller](#install-aws-load-balancer-controller)
+- [Final Steps](#final-steps)
+
+---
+
+## Prerequisites
+Before proceeding, ensure you have:
+- An AWS account with EKS, ACM, and Route 53 set up
+- `kubectl` and `aws-cli` installed and configured
+- A registered domain in Route 53
+- AWS Load Balancer Controller installed
+- ExternalDNS configured to manage Route 53 records
+
+---
+
+## Deploy Angular and React Apps
+
+### Angular App Deployment
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-app
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: angular-app
+  template:
+    metadata:
+      labels:
+        app: angular-app
+    spec:
+      containers:
+      - name: angular-app-container
+        image: stevymonkam/kuberneteimgfront:1.0
+        ports:
+        - containerPort: 80
+```
+
+### React App Deployment
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-app
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: react-app
+  template:
+    metadata:
+      labels:
+        app: react-app
+    spec:
+      containers:
+      - name: react-app-container
+        image: stevymonkam/contratti-image:1.0
+        ports:
+        - containerPort: 80
+```
+
+---
+
+## Configure Ingress and SSL
+
+### Ingress Resource
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:615299770598:certificate/a4806da9-3d96-45f2-a08d-05e380e9ef5e"
+spec:
+  rules:
+    - host: example.com
+      http:
+        paths:
+          - path: /angular
+            pathType: Prefix
+            backend:
+              service:
+                name: angular-app-service
+                port:
+                  number: 80
+          - path: /react
+            pathType: Prefix
+            backend:
+              service:
+                name: react-service-app
+                port:
+                  number: 80
+```
+
+---
+
+## Set Up ExternalDNS
+1. Deploy ExternalDNS in your cluster.
+2. Configure ExternalDNS to automatically update Route 53 records based on Ingress.
+3. Ensure your Ingress resources include a `host` field that matches your domain.
+
+---
+
+## Install AWS Load Balancer Controller
+1. Install the AWS Load Balancer Controller using Helm:
+```sh
+helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-controller \
+  --set clusterName=<your-cluster-name>
+```
+2. Ensure your Ingress resources include `alb.ingress.kubernetes.io` annotations.
+3. Verify that the controller provisions an Application Load Balancer (ALB).
+
+---
+
+## Final Steps
+After completing these steps:
+1. Applications are deployed on **EKS**.
+2. **Ingress** manages traffic routing with SSL.
+3. **ExternalDNS** dynamically updates Route 53.
+4. **AWS Load Balancer Controller** provisions an ALB.
+
+Your applications are now secure and publicly accessible over **HTTPS**! 🎉
+
+---
+
+
+
    
 
