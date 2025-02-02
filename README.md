@@ -165,11 +165,15 @@ spec:
 2. Generate a new **public SSL certificate**.
 3. Copy the **ARN** of the certificate and replace it in the service annotations above.
 
+4. ![](certificat.PNG)
+
 To apply the configurations:
 ```sh
 kubectl apply -f .
 ```
+ ![](service.PNG)
 
+  ![](loadbalancer.PNG)
 ---
 
 ## Configure DNS in Route 53
@@ -178,6 +182,9 @@ kubectl apply -f .
 3. Use an **Alias record** if supported.
 4. Verify that the domain resolves correctly.
 
+
+ ![](route_53.PNG)
+ 
 ---
 
 ## Final Steps
@@ -190,9 +197,10 @@ Your applications are now secure and publicly accessible over **HTTPS**! 🎉
 
 ---
 
-## License
-This project is open-source and available under the [MIT License](LICENSE).
 
+ ![](react.png)
+
+  ![](angular.png)
 
 
 
