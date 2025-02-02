@@ -216,6 +216,8 @@ This guide explains how to deploy Angular and React applications on AWS EKS usin
 - [Configure Ingress and SSL](#configure-ingress-and-ssl)
 - [Set Up ExternalDNS](#set-up-externaldns)
 - [Install AWS Load Balancer Controller](#install-aws-load-balancer-controller)
+- [Set Up AWS CloudFront](#Set-Up-AWS-CloudFront)
+- [Set Up AWS WAF](#Set-Up-AWS-WAF)
 - [Final Steps](#final-steps)
 
 ---
@@ -376,6 +378,68 @@ spec:
 3. Ensure your Ingress resources include a `host` field that matches your domain.
 
 ---
+
+## Set Up AWS CloudFront
+
+AWS CloudFront acts as a Content Delivery Network (CDN) that caches and accelerates content delivery.
+
+Steps to Configure CloudFront:
+
+Create a CloudFront Distribution:
+
+Open AWS Console → CloudFront → Create Distribution.
+
+Set the origin domain to your Application Load Balancer (ALB) URL.
+
+Choose Redirect HTTP to HTTPS.
+
+Attach an SSL certificate from ACM.
+
+Set TTL settings for caching dynamic/static content.
+
+Configure Route 53 to point to CloudFront:
+
+Create an Alias Record in Route 53.
+
+Set the target to your CloudFront distribution.
+
+Enable AWS WAF Security:
+
+Attach AWS WAF to CloudFront for protection against DDoS and malicious traffic.
+
+Deploy changes:
+
+Once configured, CloudFront will cache and accelerate your application, reducing latency.
+
+## Set Up AWS WAF
+
+AWS WAF (Web Application Firewall) helps protect your applications from common web threats such as SQL injection, XSS, and DDoS attacks.
+
+Steps to Configure AWS WAF:
+
+Create a Web ACL in AWS WAF:
+
+Open AWS Console → WAF & Shield → Web ACLs.
+
+Click Create Web ACL.
+
+Select CloudFront as the resource type.
+
+Add security rules (e.g., AWS Managed Rules, Rate Limiting, Geo-blocking).
+
+Attach the Web ACL to your CloudFront Distribution.
+
+Configure Custom Rules (Optional):
+
+Define custom rules to filter bad traffic (e.g., block IP ranges, detect bot traffic).
+
+Use AWS WAF logs to analyze and refine rules.
+
+Deploy and Monitor:
+
+Ensure AWS WAF is correctly applied to your CloudFront distribution.
+
+Monitor traffic in AWS WAF logs and adjust rules as needed.
 
 
 ## Final Steps
